@@ -30,14 +30,14 @@
 ### :three:可自定义视频类型任务点观看速率
 
 - 倍速有风险,谨慎而为之
-
 ## :orange_book:使用教程
 
 ### :one:可执行文件运行(小白推荐,不稳定)
 
 [点我下载](https://github.com/Hyrmm/chaoxingSpider/raw/main/main.exe)
 
-教程:待更新
+- 教程:待更新
+- 有问题和bug联系我:1358188945@qq.com
 
 ### :two:源码运行(更稳定)
 

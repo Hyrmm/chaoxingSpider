@@ -33,9 +33,6 @@
 ## :orange_book:使用教程
 
 ### :one:可执行文件运行(小白推荐,不稳定)
-
-[点我下载](https://github.com/Hyrmm/chaoxingSpider/raw/main/main.exe)
-
 - 教程:待更新
 - 有问题和bug联系我:1358188945@qq.com
 

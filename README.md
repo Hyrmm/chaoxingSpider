@@ -35,9 +35,9 @@
 
 ### :one:可执行文件运行(小白推荐,不稳定)
 
-点我下载
+[点我下载](https://github.com/Hyrmm/chaoxingSpider/raw/main/main.exe)
 
-教程:待跟新
+教程:待更新
 
 ### :two:源码运行(更稳定)
 

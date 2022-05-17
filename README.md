@@ -1,3 +1,5 @@
+
+
 <p align="center">
     <a href="https://github.com/Hyrmm/chaoxingSpider" target="_blank" style="margin-right: 20px; font-style: normal; text-decoration: none;">
         <img src="https://img.shields.io/github/stars/Hyrmm/chaoxingSpider" alt="Github Stars" />
@@ -12,6 +14,13 @@
         <img src="https://img.shields.io/github/v/release/Hyrmm/chaoxingSpider?display_name=tag&sort=semver" alt="version" />
     </a>
 </p>
+
+
+## :cl: 最近更新
+
+- 2022.5.17 暴力跳过视频类型任务点的验证码检测
+
+
 
 ## :wrench: 功能介绍
 
@@ -30,11 +39,12 @@
 ### :three:可自定义视频类型任务点观看速率
 
 - 倍速有风险,谨慎而为之
+
 ## :orange_book:使用教程
 
 ### :one:可执行文件运行(小白推荐,不稳定)
-- 教程:待更新
-- 有问题和bug反馈QQqun:323878775
+
+教程:待跟新
 
 ### :two:源码运行(更稳定)
 

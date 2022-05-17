@@ -48,7 +48,7 @@
 
 ### :two:源码运行(更稳定)
 
-1. 准备Python>=3.6
+1. 准备Python =3.6
 2. git clone 项目至本地
 3. pip install -r requirements.txt
 4. python main.py 运行程序

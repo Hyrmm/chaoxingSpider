@@ -6,11 +6,13 @@ from rich.panel import Panel
 from rich.console import Console
 from rich.table import Table
 from alive_progress import alive_bar
+import random, math
 
 console = Console()
 
 # 所有课程列表
 courses_list = []
+post_time = 1
 
 
 def print_course():
@@ -59,7 +61,7 @@ def get_course_unit():
 # 获取当前课程所有章节信息,以及当前章节总体完成状态
 def get_chapterUnit(courseid, clazzid, cpi):
     # 所有任务章节情况
-    classUrl = "https://mooc2-ans.chaoxing.com/mycourse/studentcourse?courseid={}&clazzid={}&cpi={}&ut=s".format(courseid, clazzid, cpi)
+    classUrl = f"https://mooc2-ans.chaoxing.com/mycourse/studentcourse?courseid={courseid}&clazzid={clazzid}&cpi={cpi}&ut=s"
     missonResponse = requests.get(url=classUrl, headers=headers, cookies=cookies)
     soupMisson = BeautifulSoup(missonResponse.content.decode('utf8'), 'html5lib')
     # 所有章节
@@ -256,7 +258,36 @@ def start_videoMission(missonDataItem, missonData_defaults, video_data, missionP
             else:
                 return False
         except:
-            print(f"提交爬取进度返回内容出错\n{response}")
+            # t =math.floor(2147483647*random.random())
+            # verify_soup = BeautifulSoup(response.content.decode('utf8'), "html5lib")
+            # print(verify_soup.find("img"))
+            # img_headers = {
+            #     "Accept": "image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+            #     "Accept-Encoding": "gzip, deflate, br",
+            #     "Cache-Control": "no-cache",
+            #     "Connection": "keep-alive",
+            #     "Host": "mooc1-2.chaoxing.com",
+            #     "Pragma": "no-cache",
+            #     "sec-ch-ua-mobile": "?0",
+            #     "sec-ch-ua-platform": "\"Windows\"",
+            #     "Sec-Fetch-Dest": "image",
+            #     "Sec-Fetch-Mode": "no-cors",
+            #     "Sec-Fetch-Site": "same-origin",
+            #     "Referer": "https://mooc1-2.chaoxing.com/antispiderShowVerify.ac",
+            #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.47"
+            # }
+            # imgUrl = f"https://mooc1-2.chaoxing.com/processVerifyPng.ac?t={math.floor(random.random() * 2147483647)}"
+            # res = requests.get(imgUrl, cookies=cookies, headers=img_headers)
+            # print(res.content)
+            # with open("./code.png", "wb") as f:
+            #     r = requests.get(imgUrl)
+            #     f.write(r.content)
+            #     f.close()
+
+            # 暴力破解过验证码
+            console.print("[red][系统拦截]:拦截到验证码检测,已经跳过验证码检测...")
+            # get_url = f"https://mooc1-2.chaoxing.com/html/processVerify.ac?app=0&ucode={verify_code}"
+            # print(requests.get(get_url, cookies=cookies, headers=headers).content.decode("utf8"))
             return False
 
     headers = {
@@ -274,6 +305,8 @@ def start_videoMission(missonDataItem, missonData_defaults, video_data, missionP
         isPassed = False
 
     if (not isPassed):
+        global post_time
+
         console.rule("[bold green]开 始 刷 课")
         console.print(f"{playTime}ms/{int(video_data['duration']) * 1000}ms", style="green", justify="center")
         console.print(f"{video_data['filename']}", style="green", justify="center")
@@ -286,18 +319,18 @@ def start_videoMission(missonDataItem, missonData_defaults, video_data, missionP
                     time.sleep(int(int(video_data["duration"] * 1000) - int(playTime)))
                     playTime += int(video_data["duration"] * 1000) - int(playTime)
                 else:
-                    time.sleep(1)
-                    playTime += 1000
+                    time.sleep(post_time)
+                    playTime += 1000 * post_time
                 isPassed_bool = post("0")
-                get_test(missonData_defaults["courseid"], missonData_defaults['clazzId'], missonData_defaults['knowledgeid'], missonData_defaults['cpi'])
                 # console.print("[已提交进度]{}ms/{}ms".format(playTime, int(video_data["duration"] * 1000)), justify="center")
                 if (isPassed_bool):
                     # 说明已经返回isPassed为True了,为了防止数据不准,当5次返回都true时,说明完成了,记录一下测试,只有有一次false就清理
                     isPassed_count += 1
+                    post_time = 1
                     if (isPassed_count == 10):
                         break
                     else:
-                        console.print(f"当前视频已经完成,正在进行{isPassed_count}次检测", style="blue")
+                        console.print(f"当前视频已经完成,正在进行{isPassed_count}次检测[red](需要完成10测检测即完成当前任务点)", style="blue")
                 else:
                     isPassed_count = 0
                 bar(playTime / int(video_data["duration"] * 1000))
@@ -376,7 +409,6 @@ while True:
         break
     else:
         console.print("[red][登录失败,请尝试重新登录]")
-
 
 while True:
     command = input("输入需要刷课的课程序号:")

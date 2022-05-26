@@ -1,5 +1,3 @@
-
-
 <p align="center">
     <a href="https://github.com/Hyrmm/chaoxingSpider" target="_blank" style="margin-right: 20px; font-style: normal; text-decoration: none;">
         <img src="https://img.shields.io/github/stars/Hyrmm/chaoxingSpider" alt="Github Stars" />
@@ -19,6 +17,13 @@
 ## :cl: 最近更新
 
 - 2022.5.17 暴力跳过视频类型任务点的验证码检测
+- 2022.5.26 修复无法登录失败问题(密码登录加密模式更新了)
+  - 使用教程:
+    1. [点我查看源码](https://github.com/Hyrmm/chaoxingSpider/blob/main/crypto.js)
+    2. 复制`cypoto.js`文件内的JavaScript源码
+    3. 打开浏览器,按`F12`打开控制台(`CONSOLE`),粘贴源码,回车
+    4. 在控制台输入`des("你的密码")`，注:双引号不要丢
+    5. 举例:`des("123456")`
 
 
 

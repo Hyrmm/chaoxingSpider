@@ -6,7 +6,6 @@ from rich.panel import Panel
 from rich.console import Console
 from rich.table import Table
 from alive_progress import alive_bar
-import random, math
 
 console = Console()
 
@@ -369,26 +368,30 @@ def post_document(missonDataItem, missonData_defaults, missionParts_index, misso
 
 
 def login(uname, passward):
-    login = requests.get("http://passport2.chaoxing.com/login?", headers=headers)
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE',
+        "Host": "passport2.chaoxing.com"
+    }
+    login = requests.get("http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com", headers=headers)
     global cookies
     cookies = login.cookies
     login_heades = {
         "Content-Type": "application/x-www-form-urlencoded",
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE',
+        'Referer': 'http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com',
+        "Origin": "http://passport2.chaoxing.com"
     }
     login_url = "http://passport2.chaoxing.com/fanyalogin"
     login_data = {
         "fid": "-1",
         "uname": uname,
-        "password": base64.b64encode(passward.encode("utf8")),
+        # "password": base64.b64encode(passward.encode("utf8")),
+        "password": passward,
         "refer": "http://i.chaoxing.com",
         "t": "true",
-        "forbidotherlogin": "0",
-        "validate": ""
     }
-    login_response = requests.post(url=login_url, headers=login_heades, cookies=cookies, data=parse.urlencode(login_data), )
+    login_response = requests.post(url=login_url, headers=login_heades, cookies=cookies, data=parse.urlencode(login_data))
     cookies.update(login_response.cookies)
-
     get_course_unit()
     try:
         return login_response.json()["status"]
@@ -398,13 +401,14 @@ def login(uname, passward):
 
 # 登录
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE',
+    "Host": "passport2.chaoxing.com"
 }
 cookies = ""
 
 while True:
     uname = input("请输入账号(手机号):")
-    passward = input("请输入密码:")
+    passward = input("请输入密码(des加密):")
     if (login(uname, passward)):
         break
     else:

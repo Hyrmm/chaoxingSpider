@@ -42,6 +42,7 @@ def get_course_unit():
         "courseFolderSize": "0"
     }
     course_url = "https://mooc1-1.chaoxing.com/visit/courselistdata"
+
     course_response = requests.post(url=course_url, headers=course_heades, cookies=cookies, data=parse.urlencode(course_data))
     soup = BeautifulSoup(course_response.content.decode("utf8"), 'html5lib')
     list = soup.find_all(attrs={"class", "color1"})
@@ -370,7 +371,6 @@ def post_document(missonDataItem, missonData_defaults, missionParts_index, misso
 def login(uname, passward):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE',
-        "Host": "passport2.chaoxing.com"
     }
     login = requests.get("http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com", headers=headers)
     global cookies
@@ -378,8 +378,8 @@ def login(uname, passward):
     login_heades = {
         "Content-Type": "application/x-www-form-urlencoded",
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE',
-        'Referer': 'http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com',
-        "Origin": "http://passport2.chaoxing.com"
+        # 'Referer': 'http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com',
+        # "Origin": "http://passport2.chaoxing.com"
     }
     login_url = "http://passport2.chaoxing.com/fanyalogin"
     login_data = {
@@ -402,7 +402,6 @@ def login(uname, passward):
 # 登录
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE',
-    "Host": "passport2.chaoxing.com"
 }
 cookies = ""
 
@@ -413,7 +412,7 @@ while True:
         break
     else:
         console.print("[red][登录失败,请尝试重新登录]")
-
+        console.print("[red][登录失败已修复,请查看github使用说明]")
 while True:
     command = input("输入需要刷课的课程序号:")
     try:

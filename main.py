@@ -114,7 +114,6 @@ def get_missionData(courseid, clazzid, knowledgeid, cpi):
                     for src in res.find_all("script"):
                         if ("https://fystat-ans.chaoxing.com/log/setlog?" in src["src"]):
                             temp = src["src"] + f"&_={int(round(time.time() * 1000))}"
-                            time.sleep(1)
                             res = requests.get(temp, headers=headers1, cookies=cookies)
                             print("[该章节完成学习打卡]")
                 except:
@@ -315,18 +314,17 @@ def start_videoMission(missonDataItem, missonData_defaults, video_data, missionP
             while True:
                 # 60秒提交一次 模拟自动提交 isdrag=0
                 # 睡之前判断下还剩多少时长,小于60之内直接睡剩下的时间
-                if (int(video_data["duration"] * 1000) - int(playTime) < 1000):
-                    time.sleep(int(int(video_data["duration"] * 1000) - int(playTime)))
+                if (int(video_data["duration"] * 1000) - int(playTime) < 1000 * post_time):
+                    time.sleep(1)
                     playTime += int(video_data["duration"] * 1000) - int(playTime)
                 else:
-                    time.sleep(post_time)
+                    time.sleep(1)
                     playTime += 1000 * post_time
                 isPassed_bool = post("0")
                 # console.print("[已提交进度]{}ms/{}ms".format(playTime, int(video_data["duration"] * 1000)), justify="center")
                 if (isPassed_bool):
                     # 说明已经返回isPassed为True了,为了防止数据不准,当5次返回都true时,说明完成了,记录一下测试,只有有一次false就清理
                     isPassed_count += 1
-                    post_time = 1
                     if (isPassed_count == 10):
                         break
                     else:
@@ -416,7 +414,15 @@ while True:
 while True:
     command = input("输入需要刷课的课程序号:")
     try:
+        try:
+            speed = int(input("请输入当前学习视频倍速:"))
+            post_time = speed
+            print(f"当前倍速为:{speed}x")
+        except:
+            print("输入有问题,启用默认倍速:1x")
+            post_time = 1
         get_chapterUnit(courses_list[int(command)]["courseId"], courses_list[int(command)]["clazzid"], courses_list[int(command)]["cpi"])
         console.print(print_course())
+
     except:
         print("指令出错")

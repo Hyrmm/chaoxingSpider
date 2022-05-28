@@ -2563,4 +2563,3 @@ function des(message, key="u2oh6Vu^HWe40fj") {
   });
   return encrypted.ciphertext.toString();
 }
-des(password)
